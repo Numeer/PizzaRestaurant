@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza Place</title>
+  <link rel="stylesheet" type="text/css" href="static/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Pizza Place</h1>
+    <nav>
+      <ul>
+        <li><a href="#vegetarian">Vegetarian Pizzas</a></li>
+        <li><a href="#meatlovers">Meat Lovers Pizzas</a></li>
+        <li><a href="#specialty">Specialty Pizzas</a></li>
+        <li><a href="#cart">Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="vegetarian">
+      <h2>Vegetarian Pizzas</h2>
+      <div class="menu-item">
+        <h3>Margherita</h3>
+        <p>Fresh tomatoes, mozzarella, basil</p>
+        <p>Select size:</p>
+        <select class="size-selection" data-name="Margherita" data-price-small="10" data-price-medium="12" data-price-large="14">
+          <option value="small">Small - $10</option>
+          <option value="medium">Medium - $12</option>
+          <option value="large">Large - $14</option>
+        </select>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <!-- Other vegetarian pizza items -->
+    </section>
+
+    <section id="meatlovers">
+      <h2>Meat Lovers Pizzas</h2>
+      <div class="menu-item">
+        <h3>Pepperoni Deluxe</h3>
+        <p>Pepperoni, mozzarella, bell peppers, onions</p>
+        <p>Select size:</p>
+        <select class="size-selection" data-name="Pepperoni Deluxe" data-price-small="12" data-price-medium="14" data-price-large="16">
+          <option value="small">Small - $12</option>
+          <option value="medium">Medium - $14</option>
+          <option value="large">Large - $16</option>
+        </select>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <!-- Other meat lovers pizza items -->
+    </section>
+
+    <section id="specialty">
+      <h2>Specialty Pizzas</h2>
+      <div class="menu-item">
+        <h3>Hawaiian Paradise</h3>
+        <p>Ham, pineapple, mozzarella</p>
+        <p>Select size:</p>
+        <select class="size-selection" data-name="Hawaiian Paradise" data-price-small="11" data-price-medium="13" data-price-large="15">
+          <option value="small">Small - $11</option>
+          <option value="medium">Medium - $13</option>
+          <option value="large">Large - $15</option>
+        </select>
+        <button class="add-to-cart">Add to Cart</button>
+      </div>
+      <!-- Other specialty pizza items -->
+    </section>
+
+    <section id="cart">
+      <h2>Cart</h2>
+      <ul id="cart-items"></ul>
+      <div id="total-price"></div>
+      <a href ="/confirm"><button id="checkout">Checkout </button></a>
+    </section>
+  </main>
+
+  <script src="https://js.stripe.com/v3/"></script>
+  <script src="static/script.js"></script>
+</body>
+</html>
