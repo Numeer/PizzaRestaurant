@@ -1,0 +1,123 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/css/showpizza.css" rel="stylesheet">
+</head>
+<body>
+    <a href="/admin">Dashboard</a>
+
+
+    <div class="contact">
+        {% if pizzas %}
+        <table border="1">
+            <tr>
+                <th>pizza_Name</th>
+                <th>Ingredients</th>
+                <th>Discount</th>
+            </tr>
+            {% for pizza in pizzas %}
+            <tr>
+                <td>{{ pizza[1] }}</td>
+                <td>{{ pizza[2] }}</td>
+                <td>{{ pizza[3] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+</body>
+{{ error }}
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .contact {
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/admin" class="btn btn-primary">Dashboard</a>
+
+        <div class="contact">
+            {% if pizzas %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Pizza Name</th>
+                        <th>Ingredients</th>
+                        <th>Discount</th>
+                        <th>Small Size</th>
+                        <th>Small Price</th>
+                        <th>Medium Size</th>
+                        <th>Medium Price</th>
+                        <th>Large Size</th>
+                        <th>Large Price</th>
+                        <th>Path</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for p1 in list%}
+                    <tr>
+                        <td>{{p1[0][0]}}</td>
+                        <td>{{p1[0][1]}}</td>
+                        <td>{{p1[0][2]}}</td>
+                        <td>{{p1[0][3]}}</td>
+                        <td>{{p1[0][4]}}</td>
+                        <td>{{p1[0][5]}}</td>
+                        <td>{{p1[1][4]}}</td>
+                        <td>{{p1[1][5]}}</td>
+                        <td>{{p1[2][4]}}</td>
+                        <td>{{p1[2][5]}}</td>
+
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (place it at the bottom of the body) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+{{ error }}
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Pizza Place</title>
+
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    
+
+    <style>
+    body {
+      background-image: url("static/1.jpg");
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-attachment: fixed;
+    }
+    .logo {
+      text-align: center;
+    }
+    .alert-danger{
+      text-align: center;
+    }
+  </style>
+  </head>
+  <body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-danger">
+          <ul>
+            {% for message in messages %}
+              <h2>{{ message }}</h2>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
+    <div class = "logo">
+      {{message}}
+      <h2> Registered customer will get 100 Loyality points on each purchase</h2>
+    </div>
+    <div class="navba">
+      <a href="/">Home</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <main>
+      {% for p1 in list %}
+      <section id="{{ p1[0][0] }}">
+        <div class="menu-item">
+          <h3>{{ p1[0][0] }}</h3>
+          <p>{{ p1[0][1] }}</p>
+          <p>{{ p1[0][2] }}% discount</p>
+          <p><img src="{{ p1[0][3] }}"></p>
+          <p>Select size:</p>
+          {% set discountPercentage = p1[0][2] %}
+          {% set smallPrice = p1[0][5] - (p1[0][5] * discountPercentage / 100) %}
+          {% set mediumPrice = p1[1][5] - (p1[1][5] * discountPercentage / 100) %}
+          {% set largePrice = p1[2][5] - (p1[2][5] * discountPercentage / 100) %}
+          <select class="size-selection" data-name="{{ p1[0][0] }}"
+            data-price-small="{{ smallPrice }}" data-price-medium="{{ mediumPrice }}"
+            data-price-large="{{ largePrice }}">
+            <option value="small">{{ p1[0][4] }} - {{ smallPrice }}</option>
+            <option value="medium">{{ p1[1][4] }} - {{ mediumPrice }}</option>
+            <option value="large">{{ p1[2][4] }} - {{ largePrice }}</option>
+          </select>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </section>
+    {% endfor %}
+    
+      <section id="Customizable1 Pizza">
+        <div class="menu-item">
+          <h3>Customizable pizza </h3>
+         
+          <select id="pizza1" class="Pizza Selection">
+            {% for r1 in row1 %}
+            <option value="Cust Pizza">{{r1[0]}}</option>
+            {% endfor %}
+          </select>
+          <select id="pizza2" class="Pizza Selection">
+            {% for r1 in row1 %}
+            <option value="Cust2 Pizza">{{r1[0]}}</option>
+            {% endfor %}
+          </select>
+          
+          
+          <select class="size-selection" data-name="Customizable1 Pizza"
+            data-price-small={{row2[0][1]}} data-price-medium={{row2[1][1]}}
+            data-price-large={{row2[2][1]}}>
+            <option value="small">{{row2[0][0]}} - {{row2[0][1]}}</option>
+            <option value="medium">{{row2[1][0]}} - {{row2[1][1]}}</option>
+            <option value="large">{{row2[2][0]}} - {{row2[2][1]}}</option>
+          </select>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </section>
+      <br>
+      <br>
+      <section id="cart" class="cart-container">
+        <h2>Cart</h2>
+        <ul id="cart-items"></ul>
+        <div id="total-price"></div>
+        <a href="/confirm"><button id="checkout">Checkout</button></a>
+      </section>
+    </main>
+    
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="static/script.js"></script>
+    
+  </body>
+  <footer>
+    <p class="mt-1 mb-1 text-muted">&copy; Online Pizza Restaurant</p>
+  </footer>
+</html>

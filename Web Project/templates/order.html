@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Confirm Order</title>
+    <link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <style>
+    body {
+      background-image: url("static/1.jpg");
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-attachment: fixed;
+    }
+    form {
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    form div {
+      margin-bottom: 15px;
+    }
+
+    form input[type="text"],
+    form input[type="number"] {
+      padding: 10px;
+      width: 300px;
+    }
+
+    form input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .center{
+        padding: 5px;
+        background-color: #f1f1f1;
+        text-align: center;
+        color: black;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+    .image{
+      text-align: center;
+    }
+  </style>
+  </head>
+  <body>
+    {% if msg %}
+    <div class=center><h2>{{ msg }}</h2></div>
+    {% endif %}
+    {% if points %}
+    <div class=center><h2>{{ points }}</h2></div>
+    {% endif %}
+    {% if point2 %}
+    <div class=center><h2>{{ point2 }}</h2></div>
+    {% endif %}
+    {% if not msg %}
+    <form action="/Confirm" method="POST">
+      <div>
+        <input type="text" placeholder="Name" name="name" required>
+      </div>
+      <br>
+      <div>
+        <input type="number" placeholder="Phone No" name="phNo" required>
+      </div>
+      <br>
+      <div>
+        <input type="text" placeholder="Address" name="address" required>
+      </div>
+      <br>
+      <div>
+        <!-- <input type="submit" value="Order now" class="btn btn-primary"> -->
+        {% if point2 %}
+        <button type="submit" class="btn btn-primary">Order</button>
+        {%endif%}
+        {% if not point2 %}
+        <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            data-key="pk_test_51NQyCPJoJLLxswUmZGBB0K0QKXIehFXPVzG7dPiSPOR045U2a6bhiUoLk9ksWVY7xEWX0PNr77RqMrGBJzjWqfWu00Kv5AY4B4"
+            data-description="Order Payment"
+            data-amount={{payment}}
+            data-locale="auto">
+        </script>
+        {%endif%}
+      </div>
+    </form>
+    {% endif %}
+    {% if error %}
+    <div class="image">
+      <img src="static/meme.png" width="500" height="333">
+    </div>
+    <div class="center">
+      <h2> {{error}}</h2>
+      {% endif %}
+    </div>
+    <!-- <script>
+      function subTotal(){
+        var subtotal=0;
+        var shipment=0;
+        var total=0;
+        {%for x in cart %}
+            subtotal=subtotal+({{ x.product.price }}*{{ x.cart.quantity }});
+            shipment=shipment+{{ x['product']['deliver'] }};
+        {% endfor %}
+        console.log(subtotal);
+        total=subtotal+shipment;
+        document.getElementById("subtotal").textContent="Rs."+subtotal;
+        document.getElementById("shipment").textContent="Rs."+shipment;
+        document.getElementById("total").textContent="Rs."+total;
+
+        $.ajax({
+            type:"POST",
+            contentType:"application/json;charset=utf-8",
+            url:"/charge",
+            data:JSON.stringify(total),
+            success:function (){
+                console.log("Amount totaled Successfully");
+            },
+            dataType:"JSON"
+            }
+        );
+        return total;
+    }
+  </script> -->
+
+  </body>
+</html>

@@ -1,0 +1,51 @@
+/* styles.css */
+
+/* Body styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/*!* Heading styles *!*/
+/*h1 {*/
+/*    color: #333;*/
+/*    font-size: 24px;*/
+/*}*/
+
+/* Link styles */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ccc;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Contact section styles */
+.contact {
+    margin: 20px;
+}
+
+/* Error message styles */
+.error {
+    color: red;
+    font-weight: bold;
+}

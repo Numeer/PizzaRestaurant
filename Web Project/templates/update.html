@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Pizza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 200px;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .Add {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <a href="/admin">Dashboard</a>
+
+    <div class="Add">
+        <form action="/updateprocess" method="POST">
+            <h3>Leave Blank if you dont want to update values </h3>
+            <input type="text" name="Pizza_Name" placeholder="Pizza Name"><br><br>
+            <input type="text" name="Ingredients" placeholder="Ingredients"><br><br>
+            <input type="number" name="Discount" placeholder="Discount"><br><br>
+            <input type="text" name="Path" placeholder="Path"><br><br>
+            <input type="text" name="small_price" placeholder="small_price"><br><br>
+            <input type="text" name="medium_price" placeholder="medium_price"><br><br>
+            <input type="text" name="large_price" placeholder="large_price"><br><br>
+            <button type="submit">Update Pizza</button>
+        </form>
+        <h1>{{ error }}</h1>
+    </div>
+</body>
+{{ error }}
+</html>
