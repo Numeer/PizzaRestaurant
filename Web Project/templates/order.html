@@ -50,6 +50,17 @@
     }
   </style>
   </head>
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/64afdddb94cf5d49dc635297/1h57fl96u';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
   <body>
     {% if msg %}
     <div class=center><h2>{{ msg }}</h2></div>
@@ -98,35 +109,4 @@
       <h2> {{error}}</h2>
       {% endif %}
     </div>
-    <!-- <script>
-      function subTotal(){
-        var subtotal=0;
-        var shipment=0;
-        var total=0;
-        {%for x in cart %}
-            subtotal=subtotal+({{ x.product.price }}*{{ x.cart.quantity }});
-            shipment=shipment+{{ x['product']['deliver'] }};
-        {% endfor %}
-        console.log(subtotal);
-        total=subtotal+shipment;
-        document.getElementById("subtotal").textContent="Rs."+subtotal;
-        document.getElementById("shipment").textContent="Rs."+shipment;
-        document.getElementById("total").textContent="Rs."+total;
-
-        $.ajax({
-            type:"POST",
-            contentType:"application/json;charset=utf-8",
-            url:"/charge",
-            data:JSON.stringify(total),
-            success:function (){
-                console.log("Amount totaled Successfully");
-            },
-            dataType:"JSON"
-            }
-        );
-        return total;
-    }
-  </script> -->
-
-  </body>
 </html>

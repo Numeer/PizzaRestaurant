@@ -98,57 +98,9 @@ function sendLineItemsToFlask(lineItems) {
     })
     .then(function (data) {
       console.log(data.message);
-      // Redirect to the confirmation page or perform any other necessary actions
       window.location.href = "/confirm";
     })
     .catch(function (error) {
       console.error(error);
     });
 }
-// function addToCart(event) {
-//   var menuItem;
-//   var itemName;
-//   var selectedSize;
-//   var itemPrice;
-
-//   // Check if the event is triggered from the customizable pizza dropdown
-//   if (event.target.classList.contains("Pizza Selection")) {
-//     menuItem = event.target.parentNode;
-//     itemName = event.target.value;
-//     selectedSize = menuItem.querySelector(".size-selection").value;
-//     itemPrice = menuItem.querySelector(".size-selection").getAttribute("data-price-" + selectedSize.toLowerCase());
-//   } else {
-//     menuItem = event.target.parentNode.parentNode;
-//     itemName = menuItem.querySelector("h3").textContent;
-//     selectedSize = menuItem.querySelector(".size-selection").value;
-//     itemPrice = menuItem.querySelector(".size-selection").getAttribute("data-price-" + selectedSize.toLowerCase());
-//   }
-
-//   var cartItem = document.createElement("li");
-//   cartItem.textContent = itemName + " - " + selectedSize + " - " + itemPrice;
-
-//   var removeButton = document.createElement("button");
-//   removeButton.textContent = "Remove";
-//   removeButton.classList.add("remove-from-cart");
-//   removeButton.addEventListener("click", removeFromCart);
-
-//   cartItem.appendChild(removeButton);
-
-//   var cartItemsList = document.getElementById("cart-items");
-//   cartItemsList.appendChild(cartItem);
-
-//   updateTotalPrice();
-
-//   // Send the cart item to the Flask endpoint
-//   sendCartItemToFlask({
-//     itemName: itemName,
-//     itemSize: selectedSize,
-//     itemPrice: itemPrice
-//   });
-// }
-
-// var pizza1Dropdown = document.getElementById("pizza1");
-// pizza1Dropdown.addEventListener("change", addToCart);
-
-// var pizza2Dropdown = document.getElementById("pizza2");
-// pizza2Dropdown.addEventListener("change", addToCart);

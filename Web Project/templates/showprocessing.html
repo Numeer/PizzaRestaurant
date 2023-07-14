@@ -1,43 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="/static/css/showpizza.css" rel="stylesheet">
-</head>
-<body>
-    <a href="/admin">Dashboard</a>
 
-
-    <div class="contact">
-        {% if pizzas %}
-        <table border="1">
-            <tr>
-                <th>Cust_Id</th>
-                <th>Cust_Name</th>
-                <th>Cust_Phone</th>
-                <th>Cust_Address</th>
-                <th>Quantity</th>
-                <th>price</th>
-                <th>Order_status</th>
-            </tr>
-            {% for pizza in pizzas %}
-            <tr>
-                <td>{{ pizza[0] }}</td>
-                <td>{{ pizza[2] }}</td>
-                <td>{{ pizza[3] }}</td>
-                <td>{{ pizza[4] }}</td>
-                <td>{{ pizza[5] }}</td>
-                <td>{{ pizza[6] }}</td>
-                <td>{{ pizza[7] }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        {% endif %}
-    </div>
-</body>
-{{ error }}
-</html> -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +6,6 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css">
     <style>
-        /* Custom CSS styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -78,8 +38,20 @@
     </style>
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-danger">
+          <ul>
+            {% for message in messages %}
+              <h6>{{ message }}</h6>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+    {% endwith %}
     <a href="/admin" class="btn btn-primary">Dashboard</a>
     <a href="/show_unprocessed_status" class="btn btn-primary">Back To Unprocessing</a>
+    <a href="/showprocessed" class="btn btn-primary">Show Delivered Status</a>
     <div class="contact">
         {% if pizzas %}
         <table class="table">
