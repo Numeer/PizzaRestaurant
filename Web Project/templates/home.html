@@ -16,6 +16,7 @@
       background-repeat: no-repeat;
       background-size: 100%;
       background-attachment: fixed;
+
     }
     .logo {
       text-align: center;
@@ -23,28 +24,151 @@
     .alert-danger{
       text-align: center;
     }
+    
+  * {
+	  box-sizing: border-box;
+    }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      min-height: 100vh;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+
+    h2,
+    h3,
+    a {
+      color: #34495e;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .logo {
+      margin: 0;
+      font-size: 1.45em;
+    }
+
+    .main-nav {
+      margin-top: 5px;
+
+    }
+    .logo a,
+    .main-nav a {
+      padding: 10px 15px;
+      text-transform: uppercase;
+      text-align: center;
+      display: block;
+    }
+
+    .main-nav a {
+      color: #34495e;
+      font-size: .99em;
+    }
+
+    .main-nav a:hover {
+      color: #718daa;
+    }
+
+    .header {
+      padding-top: .5em;
+      padding-bottom: .5em;
+      border: 1px solid #a2a2a2;
+      background-color: #f1f1f1;
+      -webkit-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+      -moz-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+      box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.75);
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+    }
+
+    @media (min-width: 769px) {
+      .header,
+      .main-nav {
+        display: flex;
+      }
+      .header {
+        flex-direction: column;
+        align-items: center;
+          .header{
+        width: 80%;
+        margin: 0 auto;
+        max-width: 1150px;
+      }
+      }
+
+    }
+
+    @media (min-width: 1025px) {
+      .header {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+    }
+    .logo a {
+      color: #234666;
+      text-decoration: none;
+    }
+    .logo .message {
+      margin: 15px 0 0;
+      color: #b3b3b3;
+      font-size: 12px;
+    }
   </style>
   </head>
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+  var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+  (function(){
+  var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+  s1.async=true;
+  s1.src='https://embed.tawk.to/64afdddb94cf5d49dc635297/1h57fl96u';
+  s1.charset='UTF-8';
+  s1.setAttribute('crossorigin','*');
+  s0.parentNode.insertBefore(s1,s0);
+  })();
+  </script>
   <body>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
         <div class="alert alert-danger">
           <ul>
             {% for message in messages %}
-              <h2>{{ message }}</h2>
+              <h4>{{ message }}</h4>
             {% endfor %}
           </ul>
         </div>
       {% endif %}
     {% endwith %}
+    <header class="header">
+      <h1 class="logo"><a href="#">Pizza Restaurant</a></h1>
+        <ul class="main-nav">
+      <li><a href="/">Home</a></li>
+      <li><a href="/contact">Contact</a></li>
+      {% if profile %}
+      <li><a href="/profile">Profile</a></li>
+      {% endif %}
+    </ul>
+	</header>
     <div class = "logo">
       {{message}}
-      <h2> Registered customer will get 100 Loyality points on each purchase</h2>
+      {% if error %}
+      <h4>{{ error }}</h4>
+      {% endif %}
+      <h4> Registered customer will get 100 Loyality points on each purchase</h4>
+      <p class="message"><a href="/">Login Here</a></p>
     </div>
-    <div class="navba">
-      <a href="/">Home</a>
-      <a href="/contact">Contact</a>
-    </div>
+  
+     
     <main>
       {% for p1 in list %}
       <section id="{{ p1[0][0] }}">
@@ -102,7 +226,7 @@
         <h2>Cart</h2>
         <ul id="cart-items"></ul>
         <div id="total-price"></div>
-        <a href="/confirm"><button id="checkout">Checkout</button></a>
+        <button id="checkout">Checkout</button>
       </section>
     </main>
     

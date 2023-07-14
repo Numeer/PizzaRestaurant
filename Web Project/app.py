@@ -15,8 +15,11 @@ stripe.api_key = stripe_keys['secret_key']
 
 @app.route('/', methods=['POST', 'GET'])
 def signin():
-    return render_template("signin.html")
-
+    if session.get("username") is None:
+        return render_template("signin.html")
+    else:
+        flash("Already Logged In ")
+        return redirect("/menu")
 
 @app.route("/sign_in", methods=["POST"])
 def sign_in():
@@ -27,10 +30,10 @@ def sign_in():
         flag = dhlr.sign_in(username, password)
         if flag:
             session["username"] = username
-            message = "Login Successfully"
+            flash("Login Successfully")
             return redirect("/menu")
         else:
-            error = "Error! No User Found"
+            error = "Invalid Username or Password"
             return render_template("Signin.html", error=error)
     except Exception as e:
         return render_template("Signin.html", error=str(e))
@@ -52,7 +55,7 @@ def sign_Up():
         flag = dhlr.sign_up(fullname, username, email, password)
         if flag == True:
             session["username"] = username
-            message = "Sign Up SuccessFully "
+            flash("Sign Up SuccessFully ")
             return redirect("/menu")
         else:
             error = "Error! Username already exist"
@@ -61,43 +64,64 @@ def sign_Up():
         return render_template("signup.html", error=str(e))
 
 
+@app.route('/profile',methods=['POST','GET'])
+def profile():
+    if session.get("username") is not None:
+        uname=session["username"]
+        dhlr = SMDBHandler("localhost", "root", "1234", "web_project")
+        lpoints = dhlr.getLoyalityPoints(uname)
+        return render_template("profile.html",lpoints=lpoints,name=uname)
+
+
+@app.route('/logout')
+def logout():
+    session.pop("username", None)
+    return redirect("/")
 @app.route('/menu', methods=['POST', 'GET'])
 def main():
-
-    dhlr = SMDBHandler("localhost", "root", "1234", "web_project")
-    size = dhlr.size()
-    size = size[0][0]
-    # print(size)
-    list1 = []
-    for s in range(size+1):
-        p1 = dhlr.pizzaMenu2(s)
-        if p1 is not None:
-            p1 = list(p1)
-            list1.append(p1)
-    # print(list1)
-    row1 = dhlr.getMenu2()
-    row2 = dhlr.getSize2()
-    return render_template("home.html", list=list1, row1=row1, row2=row2)
+    try:
+        dhlr = SMDBHandler("localhost", "root", "1234", "web_project")
+        size = dhlr.size()
+        size = size[0][0]
+        # print(size)
+        list1 = []
+        for s in range(size+1):
+            p1 = dhlr.pizzaMenu2(s)
+            if p1 is not None:
+                p1 = list(p1)
+                list1.append(p1)
+        # print(list1)
+        row1 = dhlr.getMenu2()
+        row2 = dhlr.getSize2()
+        if session.get("username") is not None:
+            uname=session["username"]
+            return render_template("home.html", list=list1, row1=row1, row2=row2,profile=uname)
+        else:
+            return render_template("home.html", list=list1, row1=row1, row2=row2)
+    except Exception as e:
+        return render_template("home.html", list=list1, row1=row1, row2=row2,error=str(e))
 
 
 @app.route('/confirm')
 def confirmOrder():
-    
-    if list1 != [] :
-        dhlr = SMDBHandler("localhost", "root", "1234", "web_project")
-        if session.get("username")!=None:
-            username=session["username"]
-            lPoints = dhlr.getLoyalityPoints(username)
-            if lPoints >= 1000:
-                points="Hoooo Congratulations You can get one free pizza your loyality points are "+str(lPoints)
-                return render_template("order.html",point2=points)
-            points = username+" you have "+str(lPoints)
-            return render_template("order.html",points=points)
+    try:
+        if list1 != [] :
+            dhlr = SMDBHandler("localhost", "root", "1234", "web_project")
+            if session.get("username")!=None:
+                username=session["username"]
+                lPoints = dhlr.getLoyalityPoints(username)
+                if lPoints >= 1000:
+                    points="Hoooo Congratulations You can get one free pizza your loyality points are "+str(lPoints)
+                    return render_template("order.html",point2=points)
+                points = username+" you have "+str(lPoints)
+                return render_template("order.html",points=points)
+            else:
+                return render_template("order.html")
         else:
-            return render_template("order.html")
-    else:
-        flash("Please select an item before proceeding to checkout order")
-        return redirect("/menu")
+            flash("Please select an item before proceeding to checkout order")
+            return redirect("/menu")
+    except Exception as e:
+        return render_template("home.html",error=str(e))
 
 
 @app.route('/Confirm', methods=['POST'])
@@ -168,7 +192,6 @@ def process_checkout():
 
 @app.route('/charge', methods=['GET', 'POST'])
 def charge():
-    # if 'id' in request.cookies:
     for list in list1:
         sum += int(list[2])
     amount = sum
@@ -399,7 +422,8 @@ def change_status():
         pizz = dhlr.show_unprocessed()
         pizza = dhlr.change_status(id)
         if pizza:
-            return redirect('/showprocessing')
+            flash("Status Changed to processing Successfully")
+            return redirect('/show_unprocessed_status')
         else:
             er = "Something went wrong try Again "
             return render_template("showunprocessed.html", error=er, pizzas=pizz)
@@ -415,7 +439,8 @@ def change_status_delivered():
         pizz = dhlr.show_processing()
         pizza = dhlr.changestatus(id)
         if pizza:
-            return redirect('/showprocessed')
+            flash("Status Changed to Delivered Successfully")
+            return redirect('/showprocessing')
         else:
             er = "Something Went wrong Try Again"
             return render_template("showprocessing.html", error=er, pizzas=pizz)
