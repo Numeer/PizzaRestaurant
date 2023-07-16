@@ -111,10 +111,10 @@ def confirmOrder():
                 username=session["username"]
                 lPoints = dhlr.getLoyalityPoints(username)
                 if lPoints >= 1000:
-                    points="Hoooo Congratulations You can get one free pizza your loyality points are "+str(lPoints)
-                    return render_template("order.html",point2=points)
-                points = username+" you have "+str(lPoints)
-                return render_template("order.html",points=points)
+                    flash("Hoooo Congratulations You can get one free pizza your loyality points are "+str(lPoints))
+                    return render_template("order.html",profile=username)
+                flash(username+"  you have "+str(lPoints))
+                return render_template("order.html",profile=username)
             else:
                 return render_template("order.html")
         else:
