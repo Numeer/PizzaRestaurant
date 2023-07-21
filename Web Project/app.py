@@ -70,7 +70,12 @@ def profile():
         uname=session["username"]
         dhlr = SMDBHandler("localhost", "root", "1234", "web_project")
         lpoints = dhlr.getLoyalityPoints(uname)
-        return render_template("profile.html",lpoints=lpoints,name=uname)
+        u = dhlr.getUser(uname)
+        if u is not None:
+            return render_template("profile.html",lpoints=lpoints,name=uname,list=u)
+    else:
+        flash("Please Login First")
+        return redirect("/")
 
 
 @app.route('/logout')
@@ -110,11 +115,13 @@ def confirmOrder():
             if session.get("username")!=None:
                 username=session["username"]
                 lPoints = dhlr.getLoyalityPoints(username)
-                if lPoints >= 1000:
-                    flash("Hoooo Congratulations You can get one free pizza your loyality points are "+str(lPoints))
+                if lPoints == 1000:
+                    flash("Hoooo Congratulations your loyality points are "+str(lPoints))
+                    # point = 1000
                     return render_template("order.html",profile=username)
-                flash(username+"  you have "+str(lPoints))
-                return render_template("order.html",profile=username)
+                else:
+                    flash(username+"  you have "+str(lPoints))
+                    return render_template("order.html",profile=username)
             else:
                 return render_template("order.html")
         else:
@@ -158,13 +165,13 @@ def ConfirmOrder():
                 uname=session["username"]
                 lPoints = dhlr.updateCartt(id, count, sum,uname)
                 if lPoints is not None:
-                    return render_template("order.html", msg="Order added successfully",points = lPoints)
+                    return render_template("order.html",profile = uname, msg="Order added successfully",points = lPoints)
                 else:
                     error = "Order not added"
                     raise Exception(error)
             else:
                 if dhlr.updateCart(id, count, sum):
-                    return render_template("order.html", msg="Order added successfully")
+                    return render_template("order.html", profile= uname, msg="Order added successfully")
                 else:
                     error = "Order not added"
                     raise Exception(error)
