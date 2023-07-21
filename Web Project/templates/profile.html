@@ -106,7 +106,7 @@
 
 <body>
     <header class="header">
-        <h1 class="logo"><a href="#">Flexbox</a></h1>
+        <h1 class="logo"><a href="#">Pizza Restaurant</a></h1>
           <ul class="main-nav">
         <li><a href="/">Home</a></li>
         <li><a href="/contact">Contact</a></li>
@@ -120,11 +120,9 @@
           <div class="card-body text-center">
             <h3 class="card-title">User Profile</h3>
             <h4 class="card-subtitle mb-2 text-muted">{{rName}} </h4>
-            <p class="card-text">Email: johndoe@example.com</p>
+            <p class="card-text"> Email: {{list[0][0]}}</p>
+            <p class="card-text">FullName: {{list[0][1]}} </p>
             <p class="card-text">Username: {{name}} </p>
-            <p class="card-text">Phone: 123-456-7890</p>
-            <p class="card-text">Address: 123 Pizza Street, City, Country</p>
-            <p class="card-text">Member Since: January 1, 2022</p>
             <p class="card-text">Loyalty Points: <span class="loyalty-points">{{lpoints}}</span></p>
             <a href ="/logout ">Logout</a>
           </div>

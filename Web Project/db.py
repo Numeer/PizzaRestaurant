@@ -1,5 +1,5 @@
 import pymysql
-
+from  flask  import flash
 from menu import menu
 
 
@@ -45,6 +45,32 @@ class SMDBHandler:
             mydbCursor = mydb.cursor()
             sql = "select size,price from price"
             mydbCursor.execute(sql)
+            row = mydbCursor.fetchall()
+            if len(row) > 0:
+                login = row
+            else:
+                login = None
+        except Exception as e:
+            print(str(e))
+        finally:
+            if mydbCursor != None:
+                mydbCursor.close()
+
+            if mydb != None:
+                mydb.close()
+            return login
+
+
+    def getUser(self, username):
+        mydb = None
+        mydbCursor = None
+        login = None
+        try:
+            mydb = pymysql.connect(
+                host=self.host, user=self.user, password=self.password, database=self.database)
+            mydbCursor = mydb.cursor()
+            sql = "select email,fullName from registration where username=%s"
+            mydbCursor.execute(sql, username)
             row = mydbCursor.fetchall()
             if len(row) > 0:
                 login = row
@@ -181,7 +207,7 @@ class SMDBHandler:
             args = (username)
             mydbCursor.execute(sql, args)
             row = mydbCursor.fetchone()
-            if row != "()" or row is not None:
+            if row is None:
                 sql = "insert into  registration (email,password,loyality_points,fullName,username) values(%s,%s,%s,%s,%s)"
                 args = (email, password, 0, fullname, username)
                 mydbCursor.execute(sql, args)
@@ -261,10 +287,14 @@ class SMDBHandler:
             lPoints = r1[1]
             if lPoints >= 1000 and count == 1:
                 sum=0
-                lPoints = "You got a free Pizza :)"
+                print(count)
+                print(lPoints)
                 sql = "update registration set loyality_points=%s where username=%s"
-                mydbCursor.execute(sql,(0,uname))
+                lPoints =  int(lPoints)-1000
+                args = (lPoints, uname)
+                mydbCursor.execute(sql,args)
                 mydb.commit()
+                flash("Congrats you got a free pizza")
             else:
                 lPoints = lPoints + 100
                 sql = "update registration set loyality_points=%s where username=%s"
